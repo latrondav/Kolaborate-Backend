@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,13 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l4ox^3_2q2ws%+bk-b4j*rh9n*rnp5g=$kf%50gvmpzv1-^88c'
+# SECRET_KEY = 'django-insecure-l4ox^3_2q2ws%+bk-b4j*rh9n*rnp5g=$kf%50gvmpzv1-^88c'
+SECRET_KEY=os.getenv('SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG=os.getenv('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['.vercel.app']
-
+# ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS=os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 # Application definition
 
@@ -82,9 +85,16 @@ WSGI_APPLICATION = 'KolaborateAPIProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'KolaborateAPIDb.sqlite3',
-         
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'KolaborateAPIDb.sqlite3',
+
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT', default='5432'),
+        'OPTIONS': {'sslmode': 'require'}, 
     }
 }
 
