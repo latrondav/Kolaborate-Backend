@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -19,6 +19,9 @@ import requests
 from django.http import JsonResponse
 
 # Create your views here.
+def Landing(request):
+    return render(request, 'landing.html')
+
 @api_view(['POST'])
 def RegisterIndividual(request):
     if request.method == 'POST':
