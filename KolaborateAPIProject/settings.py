@@ -134,7 +134,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -164,6 +166,6 @@ CORS_ALLOWED_ORIGINS = [
     # ... other allowed origins
 ]
 
-GOOGLE_CLIENT_ID="151010614588-gpmk1i4tvo3g69uisp9h4pipphgql020.apps.googleusercontent.com"
-GOOGLE_SECRET_KEY="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"
-GOOGLE_SOCIAL_USER_PASSWORD="{5Lt.qLbVB!GTGnB7-}YJNvx-)Y&#mdZfZbfpQeZC;]Ll]~#]%"
+GOOGLE_CLIENT_ID=os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_SECRET_KEY=os.getenv('GOOGLE_SECRET_KEY')
+GOOGLE_SOCIAL_USER_PASSWORD=os.getenv('GOOGLE_SOCIAL_USER_PASSWORD')
